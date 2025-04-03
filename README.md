@@ -3,8 +3,7 @@
 ### Description of the Expense Tracker Project:
 The Expense Tracker is a comprehensive web application designed to help individuals manage and analyze their personal finances in real-time. The core functionality of the application revolves around tracking various expenses, categorizing them, setting budgets, and providing insights into spending habits. Here's a breakdown of the project's features and how it works:
 
-![j5](https://github.com/user-attachments/assets/2e695cb3-6db0-4792-8152-7cfefb6349b5)
-
+![j5](https://github.com/user-attachments/assets/07f4e3b2-8cb8-4f4c-89fa-2bcfadee8fd1)
 
 #### Key Features:
 
