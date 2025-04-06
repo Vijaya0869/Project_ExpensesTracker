@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Edit Expense</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        body {
+            background-color: #f3f4f6;
+        }
+
+        .card {
+            background-color: #ffffff;
+            border-radius: 1rem;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            padding: 2rem;
+        }
+    </style>
+</head>
+
+<body class="min-h-screen flex items-center justify-center bg-gray-100">
+    <div class="container mx-auto px-4 py-8">
+        <div class="flex justify-center">
+            <div class="card w-full max-w-2xl">
+                <h2 class="text-3xl font-bold text-center text-gray-800 mb-6">Edit Expense</h2>
+
+                <form method="POST">
+                    <!-- Date -->
+                    <div class="mb-4">
+                        <label for="date" class="block text-sm font-medium text-gray-700">Date</label>
+                        <input type="date" name="date" id="date" value="{{ expense['Date'] }}" required
+                            class="mt-2 w-full px-4 py-2 border border-gray-300 rounded-lg shadow-sm">
+                    </div>
+
+                    <!-- Description -->
+                    <div class="mb-4">
+                        <label for="description" class="block text-sm font-medium text-gray-700">Description</label>
+                        <input type="text" name="description" id="description" value="{{ expense['Description'] }}" required
+                            class="mt-2 w-full px-4 py-2 border border-gray-300 rounded-lg shadow-sm">
+                    </div>
+
+                    <!-- Debit -->
+                    <div class="mb-4">
+                        <label for="debit" class="block text-sm font-medium text-gray-700">Debit</label>
+                        <input type="number" name="debit" id="debit" value="{{ expense['Debit'] }}"
+                            class="mt-2 w-full px-4 py-2 border border-gray-300 rounded-lg shadow-sm">
+                    </div>
+
+                    <!-- Credit -->
+                    <div class="mb-4">
+                        <label for="credit" class="block text-sm font-medium text-gray-700">Credit</label>
+                        <input type="number" name="credit" id="credit" value="{{ expense['Credit'] }}"
+                            class="mt-2 w-full px-4 py-2 border border-gray-300 rounded-lg shadow-sm">
+                    </div>
+
+                    <!-- Sub-category -->
+                    <div class="mb-4">
+                        <label for="subcategory" class="block text-sm font-medium text-gray-700">Sub-category</label>
+                        <input type="text" name="subcategory" id="subcategory" value="{{ expense['Sub-category'] }}" required
+                            class="mt-2 w-full px-4 py-2 border border-gray-300 rounded-lg shadow-sm">
+                    </div>
+
+                    <!-- Category -->
+                    <div class="mb-4">
+                        <label for="category" class="block text-sm font-medium text-gray-700">Category</label>
+                        <input type="text" name="category" id="category" value="{{ expense['Category'] }}" required
+                            class="mt-2 w-full px-4 py-2 border border-gray-300 rounded-lg shadow-sm">
+                    </div>
+
+                    <!-- Category Type -->
+                    <div class="mb-4">
+                        <label for="category_type" class="block text-sm font-medium text-gray-700">Category Type</label>
+                        <input type="text" name="category_type" id="category_type" value="{{ expense['Category Type'] }}" required
+                            class="mt-2 w-full px-4 py-2 border border-gray-300 rounded-lg shadow-sm">
+                    </div>
+
+                    <!-- Amount -->
+                    <div class="mb-4">
+                        <label for="amount" class="block text-sm font-medium text-gray-700">Amount</label>
+                        <input type="number" name="amount" id="amount" value="{{ expense['Amount'] }}" required
+                            class="mt-2 w-full px-4 py-2 border border-gray-300 rounded-lg shadow-sm">
+                    </div>
+
+                    <!-- Optional: Month Number -->
+                    {% if 'Month Number' in expense %}
+                    <div class="mb-4">
+                        <label for="month_number" class="block text-sm font-medium text-gray-700">Month Number</label>
+                        <input type="number" name="month_number" id="month_number" value="{{ expense['Month Number'] }}"
+                            class="mt-2 w-full px-4 py-2 border border-gray-300 rounded-lg shadow-sm">
+                    </div>
+                    {% endif %}
+
+                    <!-- Optional: Weekday -->
+                    {% if 'Weekday' in expense %}
+                    <div class="mb-4">
+                        <label for="weekday" class="block text-sm font-medium text-gray-700">Weekday</label>
+                        <input type="text" name="weekday" id="weekday" value="{{ expense['Weekday'] }}"
+                            class="mt-2 w-full px-4 py-2 border border-gray-300 rounded-lg shadow-sm">
+                    </div>
+                    {% endif %}
+
+                    <!-- Submit Button -->
+                    <div class="flex justify-center mt-6">
+                        <button type="submit"
+                            class="bg-indigo-600 text-white px-6 py-2 rounded-lg hover:bg-indigo-700 shadow-md">
+                            Save Changes
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>

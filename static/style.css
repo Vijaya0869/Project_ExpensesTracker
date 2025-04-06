@@ -1,0 +1,110 @@
+/* General Reset */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+body, html {
+    margin: 0;
+    padding: 0;
+    height: 100%; /* Ensure full height */
+}
+
+/* The container styles */
+.container {
+    background-color: rgba(0, 0, 0, 0.5); /* Semi-transparent dark background for better text visibility */
+    border-radius: 1rem;
+    padding: 2rem;
+}
+
+/* The card styles */
+.card {
+    border-radius: 1rem;
+    background-color: #ffffff;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    padding: 2rem;
+    opacity: 0.9; /* Slight opacity for card background */
+    margin-top: 2rem; /* Add space between card and top */
+}
+
+/* Center the container */
+.container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh; /* Full height to center vertically */
+}
+
+body {
+    background-image: url('/static/images/p3.jpg'); /* Correct path to background image */
+    background-size: cover;
+    background-position: center;
+    background-attachment: fixed;
+    background-repeat: no-repeat;
+    color:indianred;
+    font-size: 1.2rem;
+    font-weight: bold
+}
+
+.container {
+    width: 80%;
+    margin: 0 auto;
+    padding: 30px;
+}
+
+/* Table Styling */
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 30px;
+}
+
+table th, table td {
+    padding: 12px;
+    text-align: left;
+    border-bottom: 1px solid #ddd;
+}
+
+table th {
+    background-color: darkseagreen;
+    color: white;
+    font-size: 1.1rem;
+    text-align: left; /* Align header text to the left */
+    padding-left: 10px; /* Add left padding to move text to the left */
+    padding-right: 0; /* Remove any right padding */
+}
+
+table tr:hover {
+    background-color: #f1f1f1;
+}
+
+table td {
+    font-size: 1rem;
+}
+
+/* Add other button and text styles if needed */
+
+/* Logout Button */
+.logout-btn {
+    display: block;
+    text-align: center;
+    margin-top: 30px;
+    padding: 10px 20px;
+    background-color: #e74c3c;
+    color: white;
+    text-decoration: none;
+    border-radius: 5px;
+    font-size: 1rem;
+}
+
+.logout-btn:hover {
+    background-color: #c0392b;
+}
+/* For the Heading above the Table */
+h3.text-darkseagreen {
+    color:indianred; /* Changed to darkcyan as you intended */
+    font-size: 1.5rem; /* Make the font size large enough */
+    font-weight: bold; /* Make it bold */
+    margin: bottom -2px; 
+}
+
