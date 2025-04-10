@@ -4,63 +4,75 @@
     padding: 0;
     box-sizing: border-box;
 }
-body, html {
-    margin: 0;
-    padding: 0;
-    height: 100%; /* Ensure full height */
+
+html, body {
+    height: 100%;
+    font-size: 1rem; /* Adjust font size */
+    font-weight: bold;
+    overflow: hidden; /* Prevent scrolling */
 }
 
-/* The container styles */
+/* Background Image Styling */
+body {
+    background-image: url('/static/images/p3.jpg');
+    background-size: cover;
+    background-position: center;
+    background-attachment: fixed;
+    background-repeat: no-repeat;
+    color: indianred;
+}
+
+/* Center the container properly */
 .container {
-    background-color: rgba(0, 0, 0, 0.5); /* Semi-transparent dark background for better text visibility */
-    border-radius: 1rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    background-color: rgba(0, 0, 0, 0.5); /* Overlay effect */
     padding: 2rem;
+    width: 100%;
+    margin: 0 auto;
+    overflow: hidden; /* Prevent scrolling */
 }
 
-/* The card styles */
+/* Top Bar Styling (Login/Logout info) */
+.flex {
+    justify-content: space-between;
+    width: 100%;
+    margin-bottom: 1rem; /* Reduced space */
+}
+
+.flex p {
+    margin-bottom: 0; /* Remove extra bottom margin */
+}
+
+.flex a {
+    margin-top: 0; /* Adjust to remove space above logout link */
+}
+
+/* Card Styling */
 .card {
     border-radius: 1rem;
     background-color: #ffffff;
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
     padding: 2rem;
-    opacity: 0.9; /* Slight opacity for card background */
-    margin-top: 2rem; /* Add space between card and top */
-}
-
-/* Center the container */
-.container {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    min-height: 100vh; /* Full height to center vertically */
-}
-
-body {
-    background-image: url('/static/images/p3.jpg'); /* Correct path to background image */
-    background-size: cover;
-    background-position: center;
-    background-attachment: fixed;
-    background-repeat: no-repeat;
-    color:indianred;
-    font-size: 1.2rem;
-    font-weight: bold
-}
-
-.container {
-    width: 80%;
-    margin: 0 auto;
-    padding: 30px;
+    opacity: 0.95;
+    width: 100%;
+    max-width: 1200px; /* Ensures the card is not too wide */
+    max-height: 90vh; /* Limits card height */
+    overflow-y: auto; /* Scroll within card if content exceeds height */
 }
 
 /* Table Styling */
 table {
     width: 100%;
     border-collapse: collapse;
-    margin-top: 30px;
+    margin-top: 5px; /* Further reduced space above table */
+    font-size: 0.9rem;
 }
 
 table th, table td {
-    padding: 12px;
+    padding: 8px;
     text-align: left;
     border-bottom: 1px solid #ddd;
 }
@@ -68,10 +80,9 @@ table th, table td {
 table th {
     background-color: darkseagreen;
     color: white;
-    font-size: 1.1rem;
-    text-align: left; /* Align header text to the left */
-    padding-left: 10px; /* Add left padding to move text to the left */
-    padding-right: 0; /* Remove any right padding */
+    font-size: 1rem;
+    padding-left: 8px;
+    padding-right: 0;
 }
 
 table tr:hover {
@@ -79,32 +90,25 @@ table tr:hover {
 }
 
 table td {
-    font-size: 1rem;
+    font-size: 0.9rem;
 }
 
-/* Add other button and text styles if needed */
-
-/* Logout Button */
-.logout-btn {
-    display: block;
-    text-align: center;
-    margin-top: 30px;
-    padding: 10px 20px;
-    background-color: #e74c3c;
-    color: white;
-    text-decoration: none;
-    border-radius: 5px;
-    font-size: 1rem;
+/* Pagination Styling */
+.flex {
+    display: flex;
+    justify-content: center;
+    gap: 0.5rem;
 }
 
-.logout-btn:hover {
-    background-color: #c0392b;
-}
-/* For the Heading above the Table */
-h3.text-darkseagreen {
-    color:indianred; /* Changed to darkcyan as you intended */
-    font-size: 1.5rem; /* Make the font size large enough */
-    font-weight: bold; /* Make it bold */
-    margin: bottom -2px; 
+/* Heading Styling */
+h2.text-darkseagreen {
+    color: indianred;
+    font-size: 1.25rem;
+    font-weight: bold;
+    margin-bottom: 5px; /* Reduced space below heading */
 }
 
+/* Button Text Styling */
+a, .btn {
+    font-size: 0.9rem;
+}
