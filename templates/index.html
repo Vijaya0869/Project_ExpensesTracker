@@ -42,19 +42,20 @@
                     <tbody>
                         {% for expense in expenses %}
                         <tr>
-                            <td class="border px-2 py-2">{{ expense['Date'] }}</td>
-                            <td class="border px-2 py-2">{{ expense['Description'] }}</td>
-                            <td class="border px-2 py-2">{{ expense['Debit'] }}</td>
-                            <td class="border px-2 py-2">{{ expense['Credit'] }}</td>
-                            <td class="border px-2 py-2">{{ expense['Category'] }}</td>
-                            <td class="border px-2 py-2">{{ expense['Amount'] }}</td>
+                            <td class="border px-2 py-2">{{ expense['date'] }}</td>
+                            <td class="border px-2 py-2">{{ expense['description'] }}</td>
+                            <td class="border px-2 py-2">{{ expense['debit'] }}</td>
+                            <td class="border px-2 py-2">{{ expense['credit'] }}</td>
+                            <td class="border px-2 py-2">{{ expense['category'] }}</td>
+                            <td class="border px-2 py-2">{{ expense['amount'] }}</td>
                             <td class="border px-2 py-2">
-                                <a href="{{ url_for('edit_expense', expense_id=expense['id']) }}" class="text-indigo-600 hover:text-indigo-800">Edit</a> |
-                                <a href="{{ url_for('delete_expense', expense_id=expense['id']) }}" class="text-red-600 hover:text-red-800">Delete</a>
+                                <a href="{{ url_for('edit_expense', expense_id=expense['_id']) }}" class="text-indigo-600 hover:text-indigo-800">Edit</a> |
+                                <a href="{{ url_for('delete_expense', expense_id=expense['_id']) }}" class="text-red-600 hover:text-red-800">Delete</a>
                             </td>
                         </tr>
                         {% endfor %}
                     </tbody>
+                    
                 </table>
             </div>
         </div>
