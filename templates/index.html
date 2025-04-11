@@ -22,7 +22,7 @@
         </div>
 
         <!-- Content Section -->
-        <div class="flex justify-center mt-16">
+        <div class="flex justify-center mt-4">
             <div class="card w-full max-w-7xl">
 
                 <!-- Add Expense Button -->
@@ -33,10 +33,55 @@
                 </div>
 
                 <!-- Heading -->
-                <h2 class="text-2xl text-center text-green-700 font-semibold mb-0">Expenses Sheet</h2>
+                <h2 class="mb-4 text-2xl text-center text-green-700 font-semibold mb-0">Expenses Sheet</h2>
+
+<!-- Filters Section -->
+<form method="get" action="{{ url_for('index') }}" class="mb-2 bg-white px-2 py-2 rounded shadow text-sm max-w-7xl mx-auto">
+    <div class="flex flex-wrap justify-center gap-9">
+        <!-- Filter Dropdowns -->
+        <select name="subcategory" class="px-3 py-2 border rounded">
+            <option value="">All Sub-categories</option>
+            {% for value in unique_subcategories %}
+                <option value="{{ value }}" {% if value == request.args.get('subcategory') %}selected{% endif %}>{{ value }}</option>
+            {% endfor %}
+        </select>
+
+        <select name="category" class="px-3 py-2 border rounded">
+            <option value="">All Categories</option>
+            {% for value in unique_categories %}
+                <option value="{{ value }}" {% if value == request.args.get('category') %}selected{% endif %}>{{ value }}</option>
+            {% endfor %}
+        </select>
+
+        <select name="category_type" class="px-3 py-2 border rounded">
+            <option value="">All Category Types</option>
+            {% for value in unique_category_types %}
+                <option value="{{ value }}" {% if value == request.args.get('category_type') %}selected{% endif %}>{{ value }}</option>
+            {% endfor %}
+        </select>
+
+        <select name="month_number" class="px-3 py-2 border rounded">
+            <option value="">All Months</option>
+            {% for value in unique_months %}
+                <option value="{{ value }}" {% if value|string == request.args.get('month_number') %}selected{% endif %}>{{ value }}</option>
+            {% endfor %}
+        </select>
+
+        <select name="weekday" class="px-3 py-2 border rounded">
+            <option value="">All Weekdays</option>
+            {% for value in unique_weekdays %}
+                <option value="{{ value }}" {% if value == request.args.get('weekday') %}selected{% endif %}>{{ value }}</option>
+            {% endfor %}
+        </select>
+
+        <!-- Buttons -->
+        <button type="submit" class="bg-blue-600 text-white text-sm px-2 py-1 rounded hover:bg-blue-700">Apply Filters</button>
+        <a href="{{ url_for('index') }}" class="bg-gray-600 text-white text-sm px-2 py-1 rounded hover:bg-gray-700">Clear Filters</a>
+    </div>
+</form>
 
                 <!-- Expense Table -->
-                <table class="min-w-full table-auto bg-white text-gray-700 shadow-lg rounded-lg mt-2">
+                <table class="min-w-full table-auto bg-white text-gray-700 shadow-lg rounded-lg mt-0 text-sm">
                     <thead>
                         <tr>
                             <th class="px-2 py-1">Date</th>

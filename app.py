@@ -18,42 +18,67 @@ def index():
     if 'user' not in session:
         return redirect(url_for('login'))
 
-    # Get current page number from query params
+    # Get current page number
     page = int(request.args.get('page', 1))
     per_page = 10
 
-    # Filter expenses for logged-in user
+    # Initial filtered list
     user_expenses = [e for e in expenses if e['user'] == session['user']]
-    total = len(user_expenses)
 
-    # Paginate
+    # Get filter values from request
+    subcategory = request.args.get('subcategory')
+    category = request.args.get('category')
+    category_type = request.args.get('category_type')
+    month_number = request.args.get('month_number')
+    weekday = request.args.get('weekday')
+
+    # Apply filters if provided
+    if subcategory:
+        user_expenses = [e for e in user_expenses if e['Sub-category'] == subcategory]
+    if category:
+        user_expenses = [e for e in user_expenses if e['Category'] == category]
+    if category_type:
+        user_expenses = [e for e in user_expenses if e['Category Type'] == category_type]
+    if month_number:
+        user_expenses = [e for e in user_expenses if str(e['Month Number']) == month_number]
+    if weekday:
+        user_expenses = [e for e in user_expenses if e['Weekday'] == weekday]
+
+    total = len(user_expenses)
     start = (page - 1) * per_page
     end = start + per_page
     paginated_expenses = user_expenses[start:end]
-
     total_pages = math.ceil(total / per_page)
-
-    # Calculate max and min range for pagination
     page_range_start = max(1, page - 1)
     page_range_end = min(total_pages + 1, page + 2)
 
-    # Simulating a condition to show the modal (this could be based on business logic)
-    show_limit_modal = False  # Set to True if a category limit is exceeded
+    # For filter dropdowns: get unique values
+    unique_subcategories = sorted(set(e['Sub-category'] for e in expenses if e['user'] == session['user']))
+    unique_categories = sorted(set(e['Category'] for e in expenses if e['user'] == session['user']))
+    unique_category_types = sorted(set(e['Category Type'] for e in expenses if e['user'] == session['user']))
+    unique_months = sorted(set(e['Month Number'] for e in expenses))
+    weekday_order = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun']
+    unique_weekdays = sorted(set(e['Weekday'] for e in expenses), key=lambda x: weekday_order.index(x))
 
-    # Example: Check if the total amount for a specific category exceeds a limit
-    total_amount_in_category = sum(e['Amount'] for e in user_expenses if e['Category'] == 'Food')  # Replace 'Food' with your category logic
-    category_limit = 1000  # Example budget limit
+    # Show category limit modal logic (same as before)
+    total_amount_in_category = sum(e['Amount'] for e in user_expenses if e['Category'] == 'Food')
+    category_limit = 1000
+    show_limit_modal = total_amount_in_category > category_limit
 
-    if total_amount_in_category > category_limit:
-        show_limit_modal = True  # Set to True if the category limit is exceeded
-
-    return render_template('index.html',
-                           expenses=paginated_expenses,
-                           page=page,
-                           total_pages=total_pages,
-                           page_range_start=page_range_start,
-                           page_range_end=page_range_end,
-                           show_limit_modal=show_limit_modal)  # Pass the flag to the template
+    return render_template(
+        'index.html',
+        expenses=paginated_expenses,
+        page=page,
+        total_pages=total_pages,
+        page_range_start=page_range_start,
+        page_range_end=page_range_end,
+        show_limit_modal=show_limit_modal,
+        unique_subcategories=unique_subcategories,
+        unique_categories=unique_categories,
+        unique_category_types=unique_category_types,
+        unique_months=unique_months,
+        unique_weekdays=unique_weekdays
+    )
 
 @app.route('/login', methods=['GET', 'POST'])
 def login():
