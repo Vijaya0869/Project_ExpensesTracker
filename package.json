@@ -1,0 +1,18 @@
+{
+  "dependencies": {
+    "chart.js": "^4.4.8"
+  },
+  "devDependencies": {
+    "tailwindcss": "^4.1.4"
+  },
+  "name": "project_expensestracker",
+  "version": "1.0.0",
+  "description": "### Description of the Expense Tracker Project: The Expense Tracker is a comprehensive web application designed to help individuals manage and analyze their personal finances in real-time. The core functionality of the application revolves around tracking various expenses, categorizing them, setting budgets, and providing insights into spending habits. Here's a breakdown of the project's features and how it works:",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC"
+}

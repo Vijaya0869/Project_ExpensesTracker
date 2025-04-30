@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Dashboard</title>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels@2"></script>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" />
+</head>
+<body>
+  <div class="container mt-5">
+    <h2 class="text-center text-success mb-4">Category-wise Expenses</h2>
+
+    <!-- Category-wise Expense Chart -->
+    <div class="d-flex justify-content-center" style="max-width: 400px; margin: auto;">
+      <canvas id="categoryChart"></canvas>
+    </div>
+
+    <!-- Total Expense Chart -->
+    <h3 class="text-center text-success mt-5">Total Expenses</h3>
+    <div class="d-flex justify-content-center" style="max-width: 600px; margin: auto;">
+      <canvas id="totalExpenseChart"></canvas>
+    </div>
+
+    <!-- Monthly Expense Trend Chart -->
+    <h3 class="text-center text-success mt-5">Monthly Expense Trend</h3>
+    <div class="d-flex justify-content-center" style="max-width: 600px; margin: auto;">
+      <canvas id="monthlyTrendChart"></canvas>
+    </div>
+
+    <div class="text-center mt-4">
+      <a href="{{ url_for('index') }}" class="btn btn-primary">Back to Home</a>
+    </div>
+  </div>
+
+  <script>
+    const categoryLabels = {{ category_labels | tojson | safe }};
+    const categoryValues = {{ category_values | tojson | safe }};
+    const monthlyLabels = {{ monthly_labels | tojson | safe }};
+    const monthlyValues = {{ monthly_values | tojson | safe }};
+    const totalExpenseValue = {{ total_expense | tojson | safe }};
+    
+    // Category-wise expense chart (pie chart)
+    const ctx1 = document.getElementById("categoryChart").getContext("2d");
+    new Chart(ctx1, {
+      type: "pie",
+      data: {
+        labels: categoryLabels,
+        datasets: [{
+          data: categoryValues,
+          backgroundColor: [
+            "#f87171", "#60a5fa", "#34d399",
+            "#fbbf24", "#c084fc", "#f472b6", "#fb923c"
+          ],
+        }]
+      },
+      options: {
+        responsive: true,
+        plugins: {
+          legend: {
+            position: "right"
+          },
+          datalabels: {
+            color: "#000",
+            font: {
+              weight: "bold"
+            },
+            formatter: (value) => value.toFixed(2)
+          }
+        }
+      },
+      plugins: [ChartDataLabels]
+    });
+
+    // Total Expense Chart (Bar chart)
+    const ctx2 = document.getElementById("totalExpenseChart").getContext("2d");
+    new Chart(ctx2, {
+      type: "bar",
+      data: {
+        labels: ["Total Expenses"],  // You can add more periods here if needed (e.g., quarterly, yearly)
+        datasets: [{
+          label: "Total Expense",
+          data: [totalExpenseValue],
+          backgroundColor: "#34d399",
+          borderColor: "#28a745",
+          borderWidth: 1
+        }]
+      },
+      options: {
+        responsive: true,
+        plugins: {
+          legend: { display: false },
+          datalabels: {
+            color: "#000",
+            font: {
+              weight: "bold"
+            },
+            formatter: (value) => value.toFixed(2)
+          }
+        },
+        scales: {
+          y: {
+            beginAtZero: true
+          }
+        }
+      },
+      plugins: [ChartDataLabels]
+    });
+
+    // Monthly Expense Trend Chart (Line chart)
+    const ctx3 = document.getElementById("monthlyTrendChart").getContext("2d");
+    new Chart(ctx3, {
+      type: "line",
+      data: {
+        labels: monthlyLabels,
+        datasets: [{
+          label: "Monthly Expense Trend",
+          data: monthlyValues,
+          borderColor: "#60a5fa",
+          backgroundColor: "rgba(96, 165, 250, 0.2)",
+          borderWidth: 2,
+          tension: 0.4
+        }]
+      },
+      options: {
+        responsive: true,
+        plugins: {
+          legend: { position: "top" },
+          datalabels: {
+            color: "#000",
+            font: { weight: "bold" },
+            formatter: (value) => value.toFixed(2)
+          }
+        },
+        scales: {
+          y: { beginAtZero: true }
+        }
+      },
+      plugins: [ChartDataLabels]
+    });
+  </script>
+</body>
+</html>

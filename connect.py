@@ -1,20 +1,21 @@
+import json
 from pymongo import MongoClient
 
-# MongoDB connection string with the correct credentials
-connection_string = "mongodb+srv://vijayadurgakilaru:vijji@expensestracker.bzhfuoy.mongodb.net/?retryWrites=true&w=majority&appName=ExpensesTracker"
+# Connect to MongoDB Atlas
+MONGO_URI = "mongodb+srv://vijayadurgakilaru:vijji@expensestracker.bzhfuoy.mongodb.net/?retryWrites=true&w=majority&appName=ExpensesTracker"
+client = MongoClient(MONGO_URI)
 
-# Connect to MongoDB
-client = MongoClient(connection_string)
+# Choose the database and collection
+db = client['ExpensesTracker']
+expenses_collection = db['expenses']
 
-# Access the "Expense_data" database
-db = client.Expense_data
+# Read your JSON file
+with open('expenses_data.json', 'r') as file:
+    expenses = json.load(file)
 
-# Access the "Data1" collection
-collection = db.Data1
-
-# Example: Fetch all documents from the "Data1" collection
-documents = collection.find()
-
-# Print all documents in the collection
-for doc in documents:
-    print(doc)
+# Insert into MongoDB (if collection is empty)
+if expenses_collection.count_documents({}) == 0:
+    expenses_collection.insert_many(expenses)
+    print("✅ Expenses inserted successfully!")
+else:
+    print("⚠️ Collection already has data. Skipping insert.")

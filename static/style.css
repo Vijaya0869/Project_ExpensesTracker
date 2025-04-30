@@ -112,3 +112,7 @@ h2.text-darkseagreen {
 a, .btn {
     font-size: 0.9rem;
 }
+#alertText {
+        font-weight: bold;
+}
+
