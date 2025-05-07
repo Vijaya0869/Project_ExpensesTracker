@@ -92,7 +92,6 @@ def index():
         unique_weekdays=unique_weekdays
     )
 
-
 @app.route('/dashboard')
 def dashboard():
     expenses = load_expenses()
@@ -166,66 +165,72 @@ def register():
 
     return render_template('register.html')
 
-CATEGORY_LIMITS = {
-    'Living Expenses': 400,
-    'Dining Out': 10000,
-    'Groceries': 5000,
-    'Discretionary': 2000
-}
-
-@app.route('/add_expense', methods=['GET', 'POST'])
+@app.route("/add_expense", methods=["GET", "POST"])
 def add_expense():
-    if 'user' not in session:
-        return redirect(url_for('login'))
+    if request.method == "POST":
+        data = request.form
+        category = data.get("category")
+        month = int(data.get("month_number"))
+        debit = float(data.get("debit") or 0)
 
-    # Fetch expenses for current user from MongoDB
-    user_expenses = list(expenses_collection.find({'user': session['user']}))
+        # Debugging logs (optional)
+        print(f"Category: {category}")
+        print(f"Month: {month}")
+        print(f"Debit: {debit}")
 
-    # Calculate total amount for a specific category (example: Food)
-    total_amount_in_category = sum(float(e['Amount']) for e in user_expenses if e['Category'] == 'Food')
+        # Get total spent in this category/month from MongoDB
+        total_spent = sum(
+            expense.get('Debit', 0)
+            for expense in expenses_collection.find({
+                'user': session['user'],
+                'Category': category,
+                'Month Number': month
+            })
+        )
+        print(f"Total spent in category/month: {total_spent}")
 
-    # Define a category limit
-    category_limit = 1000  # Example limit
+        category_limits = {
+            'Living Expenses': 400,
+            'Dining Out': 1000,
+            'Groceries': 1000,
+            'Discretionary': 2000,
+            'Electronics':5000
 
-    # Check if the category limit is exceeded
-    category_limit_exceeded = total_amount_in_category > category_limit
-
-    if request.method == 'POST':
-        # Capture form data
-        date = request.form['date']
-        description = request.form['description']
-        debit = float(request.form['debit'])
-        credit = float(request.form['credit'])
-        subcategory = request.form['subcategory']
-        category = request.form['category']
-        category_type = request.form['category_type']
-        month_number = int(request.form['month_number'])
-        weekday = request.form['weekday']
-        amount = debit - credit
-
-        # Create the new expense document
-        new_expense = {
-            'user': session['user'],
-            'Date': date,
-            'Description': description,
-            'Debit': debit,
-            'Credit': credit,
-            'Sub-category': subcategory,
-            'Category': category,
-            'Category Type': category_type,
-            'Month Number': month_number,
-            'Weekday': weekday,
-            'Amount': amount
         }
+        limit = category_limits.get(category, float("inf"))
+        category_limit_exceeded = (total_spent + debit) > limit
+        print(f"Limit: {limit}")
+        print(f"Exceeded: {category_limit_exceeded}")
 
-        # Insert into MongoDB
-        result = expenses_collection.insert_one(new_expense)
-        print(f"Inserted document ID: {result.inserted_id}")
+        if category_limit_exceeded and not data.get("confirmed"):
+            return render_template(
+                "add_expense.html",
+                category_limit_exceeded=True,
+                form_data=data
+            )
 
-        # Redirect to main page
-        return redirect(url_for('index'))
+        # Insert the expense into MongoDB
+        expense = {
+            'Date': data.get("date"),
+            'Description': data.get("description"),
+            'Debit': float(data.get("debit") or 0),
+            'Credit': float(data.get("credit") or 0),
+            'Sub-category': data.get("subcategory"),
+            'Category': category,
+            'Category Type': data.get("category_type"),
+            'Month Number': month,
+            'Weekday': data.get("weekday"),
+            'Amount': float(data.get("debit") or 0) - float(data.get("credit") or 0),
+            'user': session['user']
+        }
+        expenses_collection.insert_one(expense)
 
-    return render_template('add_expense.html', category_limit_exceeded=category_limit_exceeded)
+        flash("Expense added successfully!", "success")
+        return redirect(url_for("index"))
+
+    # GET request
+    return render_template("add_expense.html", category_limit_exceeded=False)
+
 
 from bson.objectid import ObjectId
 

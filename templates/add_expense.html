@@ -10,31 +10,11 @@
         body {
             background-color: #f3f4f6;
         }
-
         .card {
             background-color: #ffffff;
             border-radius: 1rem;
             box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
             padding: 2rem;
-        }
-
-        /* Pop-up alert style */
-        .alert {
-            display: none;
-            position: fixed;
-            top: 20px;
-            left: 50%;
-            transform: translateX(-50%);
-            background-color: #ff6b6b;
-            color: white;
-            padding: 1rem 2rem;
-            border-radius: 0.5rem;
-            font-size: 1rem;
-            z-index: 9999;
-        }
-
-        .alert.show {
-            display: block;
         }
     </style>
 </head>
@@ -49,83 +29,102 @@
                     <!-- Date -->
                     <div class="mb-4">
                         <label for="date" class="block text-sm font-medium text-gray-700">Date</label>
-                        <input type="date" name="date" id="date" required class="mt-2 w-full px-4 py-2 border border-gray-300 rounded-lg shadow-sm">
+                        <input type="date" name="date" id="date" required
+                            value="{{ form_data['date'] if form_data else '' }}"
+                            class="mt-2 w-full px-4 py-2 border border-gray-300 rounded-lg shadow-sm">
                     </div>
 
                     <!-- Description -->
                     <div class="mb-4">
                         <label for="description" class="block text-sm font-medium text-gray-700">Description</label>
-                        <input type="text" name="description" id="description" required class="mt-2 w-full px-4 py-2 border border-gray-300 rounded-lg shadow-sm">
+                        <input type="text" name="description" id="description" required
+                            value="{{ form_data['description'] if form_data else '' }}"
+                            class="mt-2 w-full px-4 py-2 border border-gray-300 rounded-lg shadow-sm">
                     </div>
 
                     <!-- Debit -->
                     <div class="mb-4">
                         <label for="debit" class="block text-sm font-medium text-gray-700">Debit</label>
-                        <input type="number" name="debit" id="debit" required class="mt-2 w-full px-4 py-2 border border-gray-300 rounded-lg shadow-sm">
+                        <input type="number" name="debit" id="debit" step="0.01" min="0" required
+                            value="{{ form_data['debit'] if form_data else '' }}"
+                            class="mt-2 w-full px-4 py-2 border border-gray-300 rounded-lg shadow-sm">
                     </div>
 
                     <!-- Credit -->
                     <div class="mb-4">
                         <label for="credit" class="block text-sm font-medium text-gray-700">Credit</label>
-                        <input type="number" name="credit" id="credit" class="mt-2 w-full px-4 py-2 border border-gray-300 rounded-lg shadow-sm">
+                        <input type="number" name="credit" id="credit" step="0.01" min="0"
+                            value="{{ form_data['credit'] if form_data else '' }}"
+                            class="mt-2 w-full px-4 py-2 border border-gray-300 rounded-lg shadow-sm">
                     </div>
 
                     <!-- Sub-category -->
                     <div class="mb-4">
                         <label for="subcategory" class="block text-sm font-medium text-gray-700">Sub-category</label>
-                        <input type="text" name="subcategory" id="subcategory" required class="mt-2 w-full px-4 py-2 border border-gray-300 rounded-lg shadow-sm">
+                        <input type="text" name="subcategory" id="subcategory" required
+                            value="{{ form_data['subcategory'] if form_data else '' }}"
+                            class="mt-2 w-full px-4 py-2 border border-gray-300 rounded-lg shadow-sm">
                     </div>
 
                     <!-- Category -->
                     <div class="mb-4">
                         <label for="category" class="block text-sm font-medium text-gray-700">Category</label>
-                        <input type="text" name="category" id="category" required class="mt-2 w-full px-4 py-2 border border-gray-300 rounded-lg shadow-sm">
+                        <input type="text" name="category" id="category" required
+                            value="{{ form_data['category'] if form_data else '' }}"
+                            class="mt-2 w-full px-4 py-2 border border-gray-300 rounded-lg shadow-sm">
                     </div>
 
                     <!-- Category Type -->
                     <div class="mb-4">
                         <label for="category_type" class="block text-sm font-medium text-gray-700">Category Type</label>
-                        <input type="text" name="category_type" id="category_type" required class="mt-2 w-full px-4 py-2 border border-gray-300 rounded-lg shadow-sm">
+                        <input type="text" name="category_type" id="category_type" required
+                            value="{{ form_data['category_type'] if form_data else '' }}"
+                            class="mt-2 w-full px-4 py-2 border border-gray-300 rounded-lg shadow-sm">
                     </div>
 
                     <!-- Month Number -->
                     <div class="mb-4">
                         <label for="month_number" class="block text-sm font-medium text-gray-700">Month Number</label>
-                        <input type="number" name="month_number" id="month_number" required class="mt-2 w-full px-4 py-2 border border-gray-300 rounded-lg shadow-sm">
+                        <input type="number" name="month_number" id="month_number" min="1" max="12" required
+                            value="{{ form_data['month_number'] if form_data else '' }}"
+                            class="mt-2 w-full px-4 py-2 border border-gray-300 rounded-lg shadow-sm">
                     </div>
 
                     <!-- Weekday -->
                     <div class="mb-4">
                         <label for="weekday" class="block text-sm font-medium text-gray-700">Weekday</label>
-                        <input type="text" name="weekday" id="weekday" required class="mt-2 w-full px-4 py-2 border border-gray-300 rounded-lg shadow-sm">
+                        <input type="text" name="weekday" id="weekday" required
+                            value="{{ form_data['weekday'] if form_data else '' }}"
+                            class="mt-2 w-full px-4 py-2 border border-gray-300 rounded-lg shadow-sm">
                     </div>
 
                     <!-- Submit Button -->
                     <div class="flex justify-center mt-6">
-                        <button type="submit" class="bg-indigo-600 text-white px-6 py-2 rounded-lg hover:bg-indigo-700 shadow-md">Add Expense</button>
+                        <button type="submit"
+                            class="bg-indigo-600 text-white px-6 py-2 rounded-lg hover:bg-indigo-700 shadow-md">Add
+                            Expense</button>
                     </div>
                 </form>
             </div>
         </div>
     </div>
 
-    <!-- Pop-up alert -->
-    <div class="alert" id="alertMessage">
-        <strong><span id="alertText"></span></strong>
-    </div>
-
     <script>
-        const categoryLimitExceeded = "{{ 'true' if category_limit_exceeded else 'false' }}".trim();
+        const categoryLimitExceeded = "{{ category_limit_exceeded|lower }}";
         const form = document.getElementById('expenseForm');
-        form.addEventListener('submit', function (event) {
-            if (categoryLimitExceeded === "true") {
-                event.preventDefault();
-                const confirmed = confirm("You've exceeded the expected amount for this category this month. Please spend wisely. Do you still want to proceed?");
-                if (confirmed) {
-                    form.submit();
-                }
+
+        if (categoryLimitExceeded === "true") {
+            // Pop-up immediately when page loads
+            const confirmed = confirm("YOU HAVE EXCEEDED YOUR MONTHLY LIMIT FOR THIS CATEGORY. PLEASE SPEND YOUR MONEY WISELY! Do you still want to proceed?");
+            if (confirmed) {
+                const hidden = document.createElement("input");
+                hidden.type = "hidden";
+                hidden.name = "confirmed";
+                hidden.value = "true";
+                form.appendChild(hidden);
+                form.submit();
             }
-        });
+        }
     </script>
 </body>
 
